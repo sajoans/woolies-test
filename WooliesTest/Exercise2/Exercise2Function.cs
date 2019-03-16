@@ -19,15 +19,13 @@ namespace WooliesTest.Exercise2
             HttpRequest req, ILogger log)
         {
             string sortOption = req.Query["sortOption"];
-            SortOptionType sortOptionType;
-            var productsService = new ProductsService(new WooliesHttpClient());
-            var products = await productsService.GetProductsAsync();
-            if (!Enum.TryParse(sortOption, true, out sortOptionType))
+            if (!Enum.TryParse(sortOption, true, out SortOptionType sortOptionType))
             {
                 return new BadRequestResult();
             }
-
             var productSorter = new ProductSorterFactory().Create(sortOptionType);
+            var productsService = new ProductsService(new WooliesHttpClient());
+            var products = await productsService.GetProductsAsync();
             return (ActionResult)new OkObjectResult(await productSorter.Sort(products));
         }
     }
