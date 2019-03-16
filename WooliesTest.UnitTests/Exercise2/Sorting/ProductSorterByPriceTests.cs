@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WooliesTest.Exercise2.Model;
 using WooliesTest.Exercise2.Sorting;
 using Xunit;
@@ -11,13 +12,13 @@ namespace WooliesTest.UnitTests
     {
         [Theory]
         [MemberData(nameof(UnsortedProducts))]
-        public void Should_Sort_Products_by_Price_In_Ascending_Order(IEnumerable<Product> products)
+        public async Task Should_Sort_Products_by_Price_In_Ascending_Order(IEnumerable<Product> products)
         {
             // Arrange
             var productSorter = new ProductSorterByPrice();
 
             // Act
-            var sortedProducts = productSorter.Sort(products).Result.ToList();
+            var sortedProducts = (await productSorter.Sort(products)).ToList();
 
             // Assert
             Assert.Equal(10M, sortedProducts[0].Price);
@@ -27,13 +28,13 @@ namespace WooliesTest.UnitTests
 
         [Theory]
         [MemberData(nameof(UnsortedProducts))]
-        public void Should_Sort_Products_by_Price_In_Descending_Order(IEnumerable<Product> products)
+        public async Task Should_Sort_Products_by_Price_In_Descending_Order(IEnumerable<Product> products)
         {
             // Arrange
             var productSorter = new ProductSorterByPrice(SortOrder.Descending);
 
             // Act
-            var sortedProducts = productSorter.Sort(products).Result.ToList();
+            var sortedProducts = (await productSorter.Sort(products)).ToList();
 
             // Assert
             Assert.Equal(999M, sortedProducts[0].Price);

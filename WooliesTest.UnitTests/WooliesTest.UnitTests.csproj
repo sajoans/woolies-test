@@ -17,8 +17,4 @@
     <ProjectReference Include="..\WooliesTest\WooliesTest.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exercise2\Services\" />
-  </ItemGroup>
-
 </Project>

@@ -6,7 +6,7 @@ namespace WooliesTest.UnitTests
 {
     public class ProductSorterFactoryTests
     {
-        private ProductSorterFactory _productSorterFactory = new ProductSorterFactory();
+        private readonly ProductSorterFactory _productSorterFactory = new ProductSorterFactory();
 
         [Theory]
         [InlineData(SortOptionType.Descending, typeof(ProductSorterByName), SortOrder.Descending)]
