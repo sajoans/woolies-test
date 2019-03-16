@@ -20,7 +20,7 @@ namespace WooliesTest.Exercise2.Sorting
 
         public async Task<IEnumerable<Product>> Sort(IEnumerable<Product> products)
         {
-            var shopperHistory = await new ShopperHistoryService(new WooliesHttpClient()).GetShopperHistoryAsync();
+            var shopperHistory = await _shopperHistoryService.GetShopperHistoryAsync();
             var productPopularity = shopperHistory.SelectMany(p => p.Products)
                 .GroupBy(p => p.Name)
                 .Select(x => new { Name = x.Key, QtySold = x.Sum(o => o.Quantity) });
