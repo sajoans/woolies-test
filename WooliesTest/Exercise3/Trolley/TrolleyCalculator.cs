@@ -8,9 +8,12 @@ namespace WooliesTest.Exercise3.Trolley
 {
     public class TrolleyCalculator
     {
+        // WORK IN PROGRESS - This code is not complete yet
         public decimal Calculate(Model.Trolley trolley)
         {
             var productQuantities = trolley.Quantities;
+            // make sure specials are not more than regular pricing
+
             var specialsTotal = trolley.Specials.Sum(x => x.Total);
 
             var specialQuantities = trolley.Specials.SelectMany(x => x.Quantities);
