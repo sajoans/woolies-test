@@ -12,7 +12,7 @@ namespace WooliesTest.Tests
         private readonly ILogger logger = TestFactory.CreateLogger();
 
         [Fact]
-        public async void Exercise1Function_should_return_known_string()
+        public async void Exercise1Function_should_return_name_and_token()
         {
             // Arrange
             var request = TestFactory.CreateHttpRequest();
