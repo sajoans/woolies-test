@@ -13,11 +13,14 @@ namespace WooliesTest.Common
 
     public class WooliesHttpClient : IHttpClient
     {
-        private HttpClient _httpClient = new HttpClient();
+        private static readonly HttpClient _httpClient = new HttpClient();
 
         public WooliesHttpClient()
         {
-            _httpClient.BaseAddress = new Uri("http://dev-wooliesx-recruitment.azurewebsites.net/");
+            if (_httpClient.BaseAddress == null)
+            {
+                _httpClient.BaseAddress = new Uri("http://dev-wooliesx-recruitment.azurewebsites.net/");
+            }
         }
 
         public async Task<HttpResponseMessage> GetAsync(string path)
