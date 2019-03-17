@@ -1,11 +1,19 @@
 ﻿using System;
+using AzureFunctions.Autofac.Configuration;
 using WooliesTest.Common;
 using WooliesTest.Exercise2.Services;
 
 namespace WooliesTest.Exercise2.Sorting
 {
-    public class ProductSorterFactory
+    public class ProductSorterFactory : IProductSorterFactory
     {
+        private IShopperHistoryService _shopperHistoryService;
+
+        public ProductSorterFactory(IShopperHistoryService shopperHistoryService)
+        {
+            _shopperHistoryService = shopperHistoryService;
+        }
+
         public IProductSorter Create(SortOptionType sortOption)
         {
             switch (sortOption)
@@ -23,7 +31,7 @@ namespace WooliesTest.Exercise2.Sorting
                     return new ProductSorterByName(SortOrder.Descending);
 
                 case SortOptionType.Recommended:
-                    return new ProductSorterByPopularity(new ShopperHistoryService(new WooliesHttpClient()), SortOrder.Descending);
+                    return new ProductSorterByPopularity(_shopperHistoryService, sortOrder: SortOrder.Descending);
             }
 
             throw new Exception("Invalid Sort Option");

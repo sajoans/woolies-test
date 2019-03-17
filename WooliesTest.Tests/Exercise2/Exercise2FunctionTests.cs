@@ -1,9 +1,13 @@
 using System;
+using AzureFunctions.Autofac.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using WooliesTest.Common;
 using WooliesTest.Exercise2;
+using WooliesTest.Exercise2.Services;
+using WooliesTest.Exercise2.Sorting;
 using Xunit;
 
 namespace WooliesTest.Tests
@@ -19,7 +23,7 @@ namespace WooliesTest.Tests
             var request = TestFactory.CreateHttpRequest("sortOption", "invalidOption");
 
             // Act
-            var response = (BadRequestResult)await Exercise2Function.Run(request, logger);
+            var response = (BadRequestResult)await Exercise2Function.Run(request, logger, new ProductsService(new WooliesHttpClient()), new ProductSorterFactory(new ShopperHistoryService(new WooliesHttpClient())));
 
             // Assert
             Assert.Equal(400, response.StatusCode);
@@ -32,7 +36,7 @@ namespace WooliesTest.Tests
             var request = TestFactory.CreateHttpRequest("sortOption", "High");
 
             // Act
-            var response = (OkObjectResult)await Exercise2Function.Run(request, logger);
+            var response = (OkObjectResult)await Exercise2Function.Run(request, logger, new ProductsService(new WooliesHttpClient()), new ProductSorterFactory(new ShopperHistoryService(new WooliesHttpClient())));
 
             // Assert
             Assert.Equal(200, response.StatusCode);

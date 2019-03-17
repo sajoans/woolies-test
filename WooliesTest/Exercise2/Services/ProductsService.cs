@@ -7,7 +7,7 @@ using WooliesTest.Exercise2.Model;
 
 namespace WooliesTest.Exercise2.Services
 {
-    public class ProductsService
+    public class ProductsService : IProductsService
     {
         private readonly IHttpClient _httpClient;
 

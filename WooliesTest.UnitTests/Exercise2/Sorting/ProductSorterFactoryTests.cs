@@ -1,4 +1,6 @@
 using System;
+using Moq;
+using WooliesTest.Exercise2.Services;
 using WooliesTest.Exercise2.Sorting;
 using Xunit;
 
@@ -6,8 +8,6 @@ namespace WooliesTest.UnitTests
 {
     public class ProductSorterFactoryTests
     {
-        private readonly ProductSorterFactory _productSorterFactory = new ProductSorterFactory();
-
         [Theory]
         [InlineData(SortOptionType.Descending, typeof(ProductSorterByName), SortOrder.Descending)]
         [InlineData(SortOptionType.Ascending, typeof(ProductSorterByName))]
@@ -16,8 +16,12 @@ namespace WooliesTest.UnitTests
         [InlineData(SortOptionType.Recommended, typeof(ProductSorterByPopularity), SortOrder.Descending)]
         public void Should_create_correct_ProductSorter_for_given_sortOption(SortOptionType sortOption, Type productSorterType, SortOrder sortOrder = SortOrder.Ascending)
         {
+            // Arrange
+            var mockedShopperHistoryService = Mock.Of<IShopperHistoryService>();
+            var productSorterFactory = new ProductSorterFactory(mockedShopperHistoryService);
+
             // Act
-            var productSorter = _productSorterFactory.Create(sortOption);
+            var productSorter = productSorterFactory.Create(sortOption);
 
             // Assert
             Assert.Equal(productSorter.GetType(), productSorterType);
